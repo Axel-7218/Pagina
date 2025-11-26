@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <!--icono de pagina-->
+  <link rel="icon" type="image/png" href="img/password_480px.png">
+  <!--Estilos css para el login-->
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(-45deg, #6a11cb, #2575fc, #004050, #ee0979);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .login-box {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      padding: 40px;
+      width: 320px;
+      text-align: center;
+      color: white;
+    }
+    .login-box h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    .login-box input {
+      width: 93%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      outline: none;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .login-box input:focus {
+      box-shadow: 0 0 10px #2575fc;
+      transform: scale(1.05);
+    }
+    .input-group {
+      position: relative;
+      margin-bottom: 2px;
+    }
+    .input-group img {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    .icon-hide {
+      display: none; /* al inicio se oculta */
+    }
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #6a11cb, #00398f);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s;
+    }
+    .login-box button:hover {
+      background: linear-gradient(90deg, #011b49, #029baf);
+      transform: scale(1.05);
+    }
+    .error {
+      color: #fdfdfd;
+      margin-top: 10px;
+      font-size: 14px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+    <!--contenedor de loguin-->
+  <div class="login-box"> 
+    <h2>Iniciar Sesión</h2> 
+    <input type="text" id="username" placeholder="Usuario" required>
+    <!--estructura con icono para mostrar y ocultar contraseña-->
+    <div class="input-group">
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <!-- iconos personalizados -->
+        <img src="img/invisible_480px.png" alt="Mostrar" class="icon-show" onclick="togglePassword()">
+        <img src="img/visible_480px.png" alt="Ocultar" class="icon-hide" onclick="togglePassword()">
+      </div>
+    
+    <button onclick="login()">Ingresar</button>
+    <p class="error" id="error-msg">Usuario o contraseña incorrectos</p>
+  </div>
+    <!--Javascript para las funciones del logueo-->
+  <script>
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const errorMsg = document.getElementById("error-msg");
+
+      // Usuarios válidos
+      const usuarios = {
+        "admin": "1234",
+        "usuario": "abcd"
+      };
+        //funcion de Comparacion de usuarios ingresados con usuarios validados
+      if (usuarios[user] && usuarios[user] === pass) {
+        // Guardar sesión en localStorage
+        localStorage.setItem("usuarioActivo", user);
+
+        // Redirigir a la página de sistemas
+        window.location.href = "sistemas.html";
+      } else { // mostrar mensaje de error si no se cumple la comparacion
+        errorMsg.style.display = "block";
+      }
+    }
+    //funcion para mostrar y ocultar contraseña
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const showIcon = document.querySelector(".icon-show");
+      const hideIcon = document.querySelector(".icon-hide");
+      //condicion para mostrar y ocultar contraseña
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        showIcon.style.display = "none";
+        hideIcon.style.display = "block";
+      } else {
+        passwordInput.type = "password";
+        showIcon.style.display = "block";
+        hideIcon.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+</html>
